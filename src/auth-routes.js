@@ -1,6 +1,6 @@
 const uuidV1 = require('uuid/v1');
 const fs = require('fs');
-const dbData = JSON.parse(fs.readFileSync('db.json', 'utf8'));
+const dbData = JSON.parse(fs.readFileSync(__dirname + '/db.json', 'utf8'));
 const users = dbData.users;
 
 const sessionTokenName = 'session-token';

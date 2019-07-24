@@ -2,9 +2,9 @@
   "name": "node-test-server",
   "version": "0.0.1",
   "description": "node server with mocked data",
-  "main": "src/server.js",
+  "main": "./src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node ./src/server.js"
   },
   "author": "vigonin",
   "license": "MIT",
