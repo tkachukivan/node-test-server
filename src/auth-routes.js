@@ -50,12 +50,12 @@ function login(req, res, next) {
         return;
     }
 
-    const sessionToken = uuidV1();
-    authorizedUsers[login] = sessionToken;
+    const newSessionToken = uuidV1();
+    authorizedUsers[login] = newSessionToken;
     res.send({
         userName: login,
         roleId: user.roleId,
-        sessionToken,
+        sessionToken: newSessionToken,
     });
 }
 function logout(req, res, next) {
