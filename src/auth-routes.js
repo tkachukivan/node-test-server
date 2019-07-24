@@ -7,14 +7,12 @@ const sessionTokenName = 'session-token';
 
 var authorizedUsers = {};
 
-function isValidUser(login, password) {
-    var isValid = false;
-    users.forEach(function(user) {
-        if(user.login === login && user.password === password) {
-            isValid = true;
-        }
-    });
-    return isValid;
+function getUser(login) {
+    return users.find(user => user.login === login);
+}
+
+function isValidUser(user, password) {
+    return user && user.password === password;
 }
 
 function checkLoginAuth(login, sessionToken) {
@@ -45,16 +43,20 @@ function login(req, res, next) {
         res.sendStatus(200);
         return;
     }
+    const user = getUser(login);
 
-    if(!isValidUser(login, password)) {
+    if(!isValidUser(user, password)) {
         res.sendStatus(400);
         return;
     }
 
-    const newSessionToken = uuidV1();
-    authorizedUsers[login] = newSessionToken;
-    res.set(sessionTokenName, newSessionToken);
-    res.sendStatus(200);
+    const sessionToken = uuidV1();
+    authorizedUsers[login] = sessionToken;
+    res.send({
+        userName: login,
+        roleId: user.roleId,
+        sessionToken,
+    });
 }
 function logout(req, res, next) {
     const login = req.body.login;
